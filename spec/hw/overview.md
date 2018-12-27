@@ -1,10 +1,10 @@
-# BK-16 Specifications
+# Project 0930 Specifications
 
 ## General
 
 Registers: 16
 
-ROM Size: 128KiB (131072 bytes)
+ROM Size: 256KiB (131072 words)
 
 Base Clockspeed: 10MhZ
 

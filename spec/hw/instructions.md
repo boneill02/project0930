@@ -1,4 +1,4 @@
-# BK-16 Instruction Set
+# Project 0930 Instruction Set
 
 ## Arithmetic
 
