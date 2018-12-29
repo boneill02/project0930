@@ -38,7 +38,4 @@ Word length: 16
 ## Memory Layout
 
 * 0x00000 - 0x0FFFF: Program space
-  * 0x00000 - 0x001FF: Stack space
-  * 0x00200 - 0x006FF: I/O space
-  * 0x00700 - 0x0FFFF: ROM space
 * 0x10000 - 0x1FFFF: Data space

@@ -171,7 +171,7 @@ Multiply with carry
 Divide
 `Rx = Rx / IMM`
 
-### 0x29xy DIVS Rx, IMM
+### 0x29xy DVS Rx, IMM
 
 Divide signed
 `Rx = signed Rx / IMM`
@@ -327,22 +327,12 @@ Store byte
 Store data byte
 `[Rx + 0x10000] = Ry`
 
-### 0x58x0 CPB Rx
-
-Clear byte
-`[Rx] = 0`
-
-### 0x59x0 CDB Rx
-
-Clear data byte
-`[Rx + 0x10000] = 0`
-
-### 0x5Ax0 CPW Rx
+### 0x58x0 CPW Rx
 
 Clear word
 `[Rx] = 0; [Rx + 1] = 0`
 
-### 0x5Bx0 CDW Rx
+### 0x59x0 CDW Rx
 
 Clear data word
 `[Rx + 0x10000] = 0; [Rx + 0x10001] = 0`
@@ -402,30 +392,27 @@ Jump
 ### 0x72x0 JSR Rx
 
 Jump to subroutine
-+1 cycle
-`R13 = R13 + 1; R12 = Rx`
+`R13 = R13 + 1; R13, R12 = Rx`
 
 ### 0x7300 JSR IMM
 
 Jump to subroutine
-+2 cycles
-`R13 = R13 + 2; R12 = IMM; [R13] = R12`
+`R13 = R13 + 1; R12 = IMM; [R13] = R12`
 
 ### 0x7400 RET
 
 Return from subroutine
-+1 cycle
-`R13 = R13 - 2; R12 = [R13];`
+`R13 = R13 - 1; R12 = [R13];`
 
 ## I/O
 
-### 0x80x0 HWI Rx
+### 0x80x0 HWI Rx, Ry
 
-Hardware interrupt with argument Rx
+Hardware interrupt to HWID Rx with argument Ry
 
-### 0x8001 HWI IMM
+### 0x8001 HWI Rx, IMM
 
-Hardware interrupt with argument IMM
+Hardware interrupt to HWID Rx with argument IMM
 
 ### 0x81x0 HWN Rx
 
@@ -433,6 +420,6 @@ Rx = number of connected hardware devices (CPU included)
 
 ## Other
 
-### 0x9000 HLT
+### 0xA000 HLT
 
 Halt CPU processing
