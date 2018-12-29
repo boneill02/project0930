@@ -29,7 +29,6 @@ cpu_t *init_emu(word *rom) {
 void exec_op(cpu_t *cpu) {
     word opw = cpu->m[cpu->r[PC]];
     op_t *op = construct_op(opw);
-    
     if (ops[op->c][op->o] == NULL) {
         error(1, cpu->r[PC], "Invalid opcode", true);
     }

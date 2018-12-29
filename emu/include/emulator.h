@@ -46,6 +46,7 @@ byte get_byte(word src, byte offset);
 byte get_nibble_from_word(word src, byte offset);
 byte get_nibble_from_byte(byte src, byte offset);
 op_t *construct_op(word code);
+bool has_immediate(op_t *op);
 
 void exec_op(cpu_t *cpu);
 void emulate(cpu_t *cpu);
@@ -116,10 +117,15 @@ void op_igs(cpu_t *cpu, byte x, byte y);
 void op_ihs(cpu_t *cpu, byte x, byte y);
 
 /* Memory */
+
 void op_lpw(cpu_t *cpu, byte x, byte y);
 void op_ldw(cpu_t *cpu, byte x, byte y);
 void op_lpb(cpu_t *cpu, byte x, byte y);
 void op_ldb(cpu_t *cpu, byte x, byte y);
+void op_spw(cpu_t *cpu, byte x, byte y);
+void op_sdw(cpu_t *cpu, byte x, byte y);
+void op_spb(cpu_t *cpu, byte x, byte y);
+void op_sdb(cpu_t *cpu, byte x, byte y);
 void op_cpb(cpu_t *cpu, byte x, byte y);
 void op_cdb(cpu_t *cpu, byte x, byte y);
 void op_cpw(cpu_t *cpu, byte x, byte y);
@@ -179,17 +185,86 @@ static void (*ops[16][16])(cpu_t *cpu, byte x, byte y) = {
         op_not,
         op_xor
     },
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
+    {
+        op_addi,
+        op_adci,
+        op_subi,
+        op_sbci,
+        op_rsbi,
+        op_rbci,
+        op_muli,
+        op_mlsi,
+        op_divi,
+        op_dvsi,
+        op_modi,
+        op_mdsi,
+        op_movi,
+    },
+    {
+        op_sali,
+        op_sari,
+        op_slsi,
+        op_srsi,
+        op_andi,
+        op_iori,
+        op_noti,
+        op_xori
+    },
+    {
+        op_ife,
+        op_ifn,
+        op_ifl,
+        op_ifs,
+        op_ifg,
+        op_ifh,
+        op_ils,
+        op_iss,
+        op_igs,
+        op_ihs
+    },
+    {
+        op_lpw,
+        op_ldw,
+        op_lpb,
+        op_ldb,
+        op_spw,
+        op_sdw,
+        op_spb,
+        op_sdb,
+        op_cpw,
+        op_cdw
+    },
+    {
+        op_lpwi,
+        op_ldwi,
+        op_lpbi,
+        op_ldbi,
+        op_spwi,
+        op_sdwi,
+        op_spbi,
+        op_sdbi
+    },
+    {
+        op_jmp,
+        op_jmpi,
+        op_jsr,
+        op_jsri,
+        op_ret
+    },
+    {
+        op_hwi,
+        op_hwii,
+        op_hwn
+    },
     {},
     {
         op_hlt
-    }
+    },
+    {},
+    {},
+    {},
+    {},
+    {}
 };
 
 #endif

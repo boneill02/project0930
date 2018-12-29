@@ -45,3 +45,8 @@ op_t *construct_op(word code) {
 
     return op;
 }
+
+bool has_immediate(op_t *op) {
+    if (op->c == 2 || op->c == 3 || op->c == 6) return true; 
+    return false;
+}
