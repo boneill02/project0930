@@ -16,7 +16,7 @@ cpu_t *init_emu(word *rom) {
     cpu_t *cpu = malloc(sizeof(cpu_t));
     memset(cpu, 0, sizeof(cpu));
 
-    for (int i = 0; i < sizeof(rom); i++) {
+    for (int i = 0; i < MEMORY_MAX; i++) {
         cpu->m[i] = rom[i];
     }
     
