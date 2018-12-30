@@ -117,7 +117,6 @@ void op_igs(cpu_t *cpu, byte x, byte y);
 void op_ihs(cpu_t *cpu, byte x, byte y);
 
 /* Memory */
-
 void op_lpw(cpu_t *cpu, byte x, byte y);
 void op_ldw(cpu_t *cpu, byte x, byte y);
 void op_lpb(cpu_t *cpu, byte x, byte y);

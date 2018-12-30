@@ -597,7 +597,13 @@ void op_ret(cpu_t *cpu, byte x, byte y) {
 void op_hwi(cpu_t *cpu, byte x, byte y) {
     // TODO hardware
     // Temporary code
-    printf("%c", (char) cpu->r[y]);
+    if (cpu->r[x] == 0) {
+        // Output
+        putchar((char) cpu->r[y]);
+    } else if (cpu->r[x] == 1) {
+        // Input
+        cpu->r[y] = getchar();
+    } 
 }
 
 void op_hwii(cpu_t *cpu, byte x, byte y) {
