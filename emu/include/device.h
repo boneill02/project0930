@@ -13,4 +13,9 @@ typedef struct display1 {
     SDL_Renderer *renderer;
 } display1_t;
 
+display1_t *display;
+
+display1_t *init_display1();
+void write_display1(byte y, word imm);
+
 #endif // EMU_DEVICE_H

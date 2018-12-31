@@ -1,5 +1,6 @@
 /* CPU Operations */
 #include "emulator.h"
+#include "device.h"
 
 void op_add(cpu_t *cpu, byte x, byte y) {
     cpu->r[x] += cpu->r[y];
@@ -603,11 +604,14 @@ void op_hwi(cpu_t *cpu, byte x, byte y) {
     } else if (cpu->r[x] == 1) {
         // Input
         cpu->r[y] = getchar();
-    } 
+    }
 }
 
 void op_hwii(cpu_t *cpu, byte x, byte y) {
     // TODO hardware
+    if (cpu->r[x] == 1) {
+        write_display1(y, cpu->m[++cpu->r[PC]]);
+    }
 }
 
 void op_hwn(cpu_t *cpu, byte x, byte y) {

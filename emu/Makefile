@@ -6,7 +6,7 @@ OBJ_DIR=obj
 SRC_DIR=src
 
 CC=/bin/gcc
-CFLAGS=-g -w -I$(INC_DIR)
+CFLAGS=-g -w -I$(INC_DIR) -lSDL2
 OUT_NAME=emu0930
 
 out: objects

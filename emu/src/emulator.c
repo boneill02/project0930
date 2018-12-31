@@ -1,5 +1,6 @@
 /* The core of the emulator. */
 #include "emulator.h"
+#include "device.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,6 +10,7 @@
     Initialize components for emulation
  */
 cpu_t *init_emu(word *rom) {
+    display = init_display1();
     if (sizeof(rom) != sizeof(MEMORY_MAX) * sizeof(word)) {
         error(1, "Invalid ROM", true);
     }
