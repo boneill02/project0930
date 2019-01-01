@@ -406,15 +406,15 @@ Return from subroutine
 
 ## I/O
 
-### 0x80x0 HWI Rx, Ry
+### 0x80xy HWI Rx, Ry
 
 Hardware interrupt to HWID Rx with argument Ry
 
-### 0x8001 HWI Rx, IMM
+### 0x81xy HWI Rx, Ry, IMM
 
-Hardware interrupt to HWID Rx with argument IMM
+Hardware interrupt to HWID Rx with argument Ry, IMM
 
-### 0x81x0 HWN Rx
+### 0x82x0 HWN Rx
 
 Rx = number of connected hardware devices (CPU included)
 
