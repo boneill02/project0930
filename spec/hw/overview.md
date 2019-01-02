@@ -20,7 +20,7 @@ Word length: 16
   * Basic with Immediate: 0x2oxy
   * Bitwise/Shifts with Immediate: 0x3oxy
   * Conditional: 0x4oxy
-* Memory: 0x5oxy - 0x6oxy
+* Memory: 0x5oxy - 0x8oxy
   * Load/Store bytes: 0x5oxy
   * Load/Store words: 0x6oxy
   * Load/Store bytes with Immediate: 0x7oxy
