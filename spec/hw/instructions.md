@@ -480,12 +480,12 @@ Store data word
 ### 0x84x0 CPW Rx
 
 Clear word
-`[Rx] = 0; [Rx + 1] = 0`
+`[Rx] = 0`
 
 ### 0x85x0 CDW Rx
 
 Clear data word
-`[Rx + 0x10000] = 0; [Rx + 0x10001] = 0`
+`[Rx + 0x10000] = 0`
 
 ### 0x90x0 LPH Rx, IMM
 
