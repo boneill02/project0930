@@ -563,7 +563,7 @@ Jump
 ### 0xB2x0 JSR Rx
 
 Jump to subroutine
-`R13 = R13 + 1; R13, R12 = Rx`
+`R13 = R13 + 1; R13 = Rx; R12 = Rx`
 
 ### 0xB300 JSR IMM
 
