@@ -20,14 +20,14 @@ Word length: 16
   * Basic with Immediate: 0x2oxy
   * Bitwise/Shifts with Immediate: 0x3oxy
   * Conditional: 0x4oxy
-* Memory: 0x5oxy - 0x8oxy
-  * Load/Store bytes: 0x5oxy
-  * Load/Store words: 0x6oxy
-  * Load/Store bytes with Immediate: 0x7oxy
-  * Load/store words with Immediate: 0x8oxy
-* Branch: 0x9oxy
-* I/O: 0xAoxy
-* Other: 0xAoxy - 0xFoxy
+* Memory: 0x7oxy - 0xAoxy
+  * Load/Store bytes: 0x7oxy
+  * Load/Store words: 0x8oxy
+  * Load/Store bytes with Immediate: 0x9oxy
+  * Load/store words with Immediate: 0xAoxy
+* Branch: 0xBoxy
+* I/O: 0xCoxy
+* Other: 0xDoxy - 0xFoxy
 
 ## Registers
 

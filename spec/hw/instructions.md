@@ -518,75 +518,79 @@ Store program byte (low)
 `[Rx] = ([Rx] & 0xFF00) | (IMM & 0x00FF)`
 
 
-### 0x76xy SDH Rx, IMM
+### 0x96xy SDH Rx, IMM
 
 Store data byte (high)
 `[Rx + 0x10000] = ([Rx + 0x10000] & 0x00FF) | (IMM & 0xFF00)`
 
-### 0x77xy SDL Rx, IMM
+### 0x97xy SDL Rx, IMM
 
 Store data byte (low)
 `[Rx + 0x10000] = ([Rx + 0x10000] & 0xFF00) | (IMM & 0x00FF)`
 
-### 0x80xy LPW Rx, IMM
+### 0xA0xy LPW Rx, IMM
 
 Load word
 `Rx = [IMM]`
 
-### 0x81xy LDW Rx, IMM
+### 0xA1xy LDW Rx, IMM
 
 Load data word
 `Rx = [IMM + 0x10000]`
 
-### 0x82xy SPW Rx, IMM
+### 0xA2xy SPW Rx, IMM
 
 Store word
 `[Rx] = IMM`
 
-### 0x83xy SDW Rx, IMM
+### 0xA3xy SDW Rx, IMM
 
 Store data word
 `[Rx + 0x10000] = IMM`
 
 ## Branch
 
-### 0x90x0 JMP Rx
+### 0xB0x0 JMP Rx
 
 Jump
 `R12 = R12 + Rx`
 
-### 0x9100 JMP IMM
+### 0xB100 JMP IMM
 
 Jump
 `R12 = R12 + IMM`
 
-### 0x92x0 JSR Rx
+### 0xB2x0 JSR Rx
 
 Jump to subroutine
 `R13 = R13 + 1; R13, R12 = Rx`
 
-### 0x9300 JSR IMM
+### 0xB300 JSR IMM
 
 Jump to subroutine
 `R13 = R13 + 1; R12 = IMM; [R13] = R12`
 
-### 0x9400 RET
+### 0xB400 RET
 
 Return from subroutine
 `R13 = R13 - 1; R12 = [R13]`
 
 ## I/O
 
-### 0xA0xy HWI Rx, Ry
+### 0xC0xy HWI Rx, Ry
 
 Hardware interrupt to HWID Rx with argument Ry
 
-### 0xA1x0 HWI Rx, IMM
+### 0xC1x0 HWI Rx, IMM
 
 Hardware interrupt to HWID Rx with argument IMM
 
 ## Other
 
-### 0xB000 HLT
+### 0xD000 HLT
 
 Halt CPU processing
+
+### 0xD100 NOP
+
+No operation
