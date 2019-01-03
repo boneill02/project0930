@@ -2,7 +2,7 @@
 #include "emulator.h"
 
 bool is_positive(word src) {
-    return (src & 0b1000000000000000) >> 15;
+    return ~((src & 0b1000000000000000) >> 15);
 }
 
 word get_negative(word src) {

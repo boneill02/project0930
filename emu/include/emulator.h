@@ -42,6 +42,7 @@ typedef struct op {
 
 cpu_t *init_emu(word *rom);
 
+bool is_positive(word src);
 byte get_byte(word src, byte offset);
 byte get_nibble_from_word(word src, byte offset);
 byte get_nibble_from_byte(byte src, byte offset);
@@ -116,29 +117,49 @@ void op_iss(cpu_t *cpu, byte x, byte y);
 void op_igs(cpu_t *cpu, byte x, byte y);
 void op_ihs(cpu_t *cpu, byte x, byte y);
 
-/* Memory */
+/* Load/Store bytes */
+void op_lph(cpu_t *cpu, byte x, byte y);
+void op_lpl(cpu_t *cpu, byte x, byte y);
+void op_ldh(cpu_t *cpu, byte x, byte y);
+void op_ldl(cpu_t *cpu, byte x, byte y);
+void op_sph(cpu_t *cpu, byte x, byte y);
+void op_spl(cpu_t *cpu, byte x, byte y);
+void op_sdh(cpu_t *cpu, byte x, byte y);
+void op_sdl(cpu_t *cpu, byte x, byte y);
+void op_cph(cpu_t *cpu, byte x, byte y);
+void op_cpl(cpu_t *cpu, byte x, byte y);
+void op_cdh(cpu_t *cpu, byte x, byte y);
+void op_cdl(cpu_t *cpu, byte x, byte y);
+
+/* Load/Store words */
 void op_lpw(cpu_t *cpu, byte x, byte y);
 void op_ldw(cpu_t *cpu, byte x, byte y);
-void op_lpb(cpu_t *cpu, byte x, byte y);
-void op_ldb(cpu_t *cpu, byte x, byte y);
 void op_spw(cpu_t *cpu, byte x, byte y);
 void op_sdw(cpu_t *cpu, byte x, byte y);
-void op_spb(cpu_t *cpu, byte x, byte y);
-void op_sdb(cpu_t *cpu, byte x, byte y);
-void op_cpb(cpu_t *cpu, byte x, byte y);
-void op_cdb(cpu_t *cpu, byte x, byte y);
 void op_cpw(cpu_t *cpu, byte x, byte y);
 void op_cdw(cpu_t *cpu, byte x, byte y);
 
-/* Memory with immediate */
+/* Load/Store bytes with immediate */
+void op_lphi(cpu_t *cpu, byte x, byte y);
+void op_lpli(cpu_t *cpu, byte x, byte y);
+void op_ldhi(cpu_t *cpu, byte x, byte y);
+void op_ldli(cpu_t *cpu, byte x, byte y);
+void op_sphi(cpu_t *cpu, byte x, byte y);
+void op_spli(cpu_t *cpu, byte x, byte y);
+void op_sdhi(cpu_t *cpu, byte x, byte y);
+void op_sdli(cpu_t *cpu, byte x, byte y);
+void op_cphi(cpu_t *cpu, byte x, byte y);
+void op_cpli(cpu_t *cpu, byte x, byte y);
+void op_cdhi(cpu_t *cpu, byte x, byte y);
+void op_cdli(cpu_t *cpu, byte x, byte y);
+
+/* Load/Store words with immediate */
 void op_lpwi(cpu_t *cpu, byte x, byte y);
 void op_ldwi(cpu_t *cpu, byte x, byte y);
-void op_lpbi(cpu_t *cpu, byte x, byte y);
-void op_ldbi(cpu_t *cpu, byte x, byte y);
 void op_spwi(cpu_t *cpu, byte x, byte y);
 void op_sdwi(cpu_t *cpu, byte x, byte y);
-void op_spbi(cpu_t *cpu, byte x, byte y);
-void op_sdbi(cpu_t *cpu, byte x, byte y);
+void op_cpwi(cpu_t *cpu, byte x, byte y);
+void op_cdwi(cpu_t *cpu, byte x, byte y);
 
 /* Branching */
 void op_jmp(cpu_t *cpu, byte x, byte y);
@@ -222,26 +243,42 @@ static void (*ops[16][16])(cpu_t *cpu, byte x, byte y) = {
         op_ihs
     },
     {
+        op_lph,
+        op_lpl,
+        op_ldh,
+        op_ldl,
+        op_sph,
+        op_spl,
+        op_sdh,
+        op_sdl,
+        op_cph,
+        op_cpl,
+        op_cdh,
+        op_cdl
+    },
+    {
         op_lpw,
         op_ldw,
-        op_lpb,
-        op_ldb,
         op_spw,
         op_sdw,
-        op_spb,
-        op_sdb,
         op_cpw,
         op_cdw
     },
     {
+        op_lphi,
+        op_lpli,
+        op_ldhi,
+        op_ldli,
+        op_sphi,
+        op_spli,
+        op_sdhi,
+        op_sdli
+    },
+    {
         op_lpwi,
         op_ldwi,
-        op_lpbi,
-        op_ldbi,
         op_spwi,
-        op_sdwi,
-        op_spbi,
-        op_sdbi
+        op_sdwi
     },
     {
         op_jmp,
@@ -252,16 +289,11 @@ static void (*ops[16][16])(cpu_t *cpu, byte x, byte y) = {
     },
     {
         op_hwi,
-        op_hwii,
-        op_hwn
+        op_hwii
     },
-    {},
     {
         op_hlt
     },
-    {},
-    {},
-    {},
     {},
     {}
 };

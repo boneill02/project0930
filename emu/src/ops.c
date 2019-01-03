@@ -510,11 +510,19 @@ void op_ldw(cpu_t *cpu, byte x, byte y) {
     cpu->r[x] = cpu->m[cpu->r[y] + PROGRAM_MAX];
 }
 
-void op_lpb(cpu_t *cpu, byte x, byte y) {
+void op_lph(cpu_t *cpu, byte x, byte y) {
+    cpu->r[x] = (cpu->m[cpu->r[y]] & 0xFF00) >> 8;
+}
+
+void op_lpl(cpu_t *cpu, byte x, byte y) {
     cpu->r[x] = cpu->m[cpu->r[y]] & 0x00FF;
 }
 
-void op_ldb(cpu_t *cpu, byte x, byte y) {
+void op_ldh(cpu_t *cpu, byte x, byte y) {
+    cpu->r[x] = (cpu->m[cpu->r[y] + PROGRAM_MAX] & 0xFF00) >> 8;
+}
+
+void op_ldl(cpu_t *cpu, byte x, byte y) {
     cpu->r[x] = cpu->m[cpu->r[y] + PROGRAM_MAX] & 0x00FF;
 }
 
@@ -526,12 +534,36 @@ void op_sdw(cpu_t *cpu, byte x, byte y) {
     cpu->m[cpu->r[x] + PROGRAM_MAX] = cpu->r[y];
 }
 
-void op_spb(cpu_t *cpu, byte x, byte y) {
+void op_sph(cpu_t *cpu, byte x, byte y) {
+    cpu->m[cpu->r[x]] = (cpu->r[y] & 0xFF00) >> 8;
+}
+
+void op_spl(cpu_t *cpu, byte x, byte y) {
     cpu->m[cpu->r[x]] = cpu->r[y] & 0x00FF;
 }
 
-void op_sdb(cpu_t *cpu, byte x, byte y) {
+void op_sdh(cpu_t *cpu, byte x, byte y) {
+    cpu->m[cpu->r[x] + PROGRAM_MAX] = (cpu->r[y] & 0xFF00) >> 8;
+}
+
+void op_sdl(cpu_t *cpu, byte x, byte y) {
     cpu->m[cpu->r[x] + PROGRAM_MAX] = cpu->r[y] & 0x00FF;
+}
+
+void op_cph(cpu_t *cpu, byte x, byte y) {
+    cpu->m[cpu->r[x]] = cpu->m[cpu->r[x]] & 0x00FF;
+}
+
+void op_cpl(cpu_t *cpu, byte x, byte y) {
+    cpu->m[cpu->r[x]] = cpu->m[cpu->r[x]] & 0xFF00;
+}
+
+void op_cdh(cpu_t *cpu, byte x, byte y) {
+    cpu->m[cpu->r[x] + PROGRAM_MAX] = cpu->m[cpu->r[x]] & 0x00FF;
+}
+
+void op_cdl(cpu_t *cpu, byte x, byte y) {
+    cpu->m[cpu->r[x] + PROGRAM_MAX] = cpu->m[cpu->r[x]] & 0xFF00;
 }
 
 void op_cpw(cpu_t *cpu, byte x, byte y) {
@@ -550,11 +582,19 @@ void op_ldwi(cpu_t *cpu, byte x, byte y) {
     cpu->r[x] = cpu->m[cpu->m[++cpu->r[PC]] + PROGRAM_MAX];
 }
 
-void op_lpbi(cpu_t *cpu, byte x, byte y) {
-    cpu->r[x] = cpu->m[cpu->m[++cpu->r[PC]]];
+void op_lphi(cpu_t *cpu, byte x, byte y) {
+    cpu->r[x] = (cpu->m[cpu->m[++cpu->r[PC]]] & 0xFF00) >> 8;
 }
 
-void op_ldbi(cpu_t *cpu, byte x, byte y) {
+void op_lpli(cpu_t *cpu, byte x, byte y) {
+    cpu->r[x] = cpu->m[cpu->m[++cpu->r[PC]]] & 0x00FF;
+}
+
+void op_ldhi(cpu_t *cpu, byte x, byte y) {
+    cpu->r[x] = (cpu->m[cpu->m[++cpu->r[PC]] + PROGRAM_MAX] & 0xFF00) >> 8;
+}
+
+void op_ldli(cpu_t *cpu, byte x, byte y) {
     cpu->r[x] = cpu->m[cpu->m[++cpu->r[PC]] + PROGRAM_MAX] & 0x00FF;
 }
 
@@ -566,24 +606,41 @@ void op_sdwi(cpu_t *cpu, byte x, byte y) {
     cpu->m[cpu->m[++cpu->r[PC]] + PROGRAM_MAX] = cpu->r[x];
 }
 
-void op_spbi(cpu_t *cpu, byte x, byte y) {
+void op_sphi(cpu_t *cpu, byte x, byte y) {
+    cpu->m[cpu->m[++cpu->r[PC]]] = (cpu->r[x] & 0xFF00) >> 8;
+}
+
+void op_spli(cpu_t *cpu, byte x, byte y) {
     cpu->m[cpu->m[++cpu->r[PC]]] = cpu->r[x] & 0x00FF;
 }
 
-void op_sdbi(cpu_t *cpu, byte x, byte y) {
+void op_sdhi(cpu_t *cpu, byte x, byte y) {
+    cpu->m[cpu->m[++cpu->r[PC]] + PROGRAM_MAX] = (cpu->r[x] & 0xFF00) >> 8;
+}
+
+void op_sdli(cpu_t *cpu, byte x, byte y) {
     cpu->m[cpu->m[++cpu->r[PC]] + PROGRAM_MAX] = cpu->r[x] & 0x00FF;
 }
 
 void op_jmp(cpu_t *cpu, byte x, byte y) {
-    cpu->r[PC] = cpu->r[x];
+    if (is_positive(cpu->r[x])) {
+        cpu->r[PC] += cpu->r[x];
+    } else {
+        cpu->r[PC] -= cpu->r[x];
+    }
 }
 
 void op_jmpi(cpu_t *cpu, byte x, byte y) {
-    cpu->r[PC] = cpu->m[++cpu->r[PC]];
+    if (is_positive(cpu->r[x])) {
+        cpu->r[PC] += cpu->m[cpu->r[PC] + 1];
+    } else {
+        cpu->r[PC] -= cpu->m[cpu->r[PC] + 1];
+    }
 }
 
 void op_jsr(cpu_t *cpu, byte x, byte y) {
-    cpu->r[PC] = cpu->m[++cpu->r[SP]];
+    cpu->r[PC] = cpu->m[cpu->r[x]];
+    cpu->m[++cpu->r[SP]] = cpu->r[x];
 }
 
 void op_jsri(cpu_t *cpu, byte x, byte y) {
