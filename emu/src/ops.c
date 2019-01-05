@@ -658,17 +658,25 @@ void op_hwi(cpu_t *cpu, byte x, byte y) {
     if (cpu->r[x] == 0) {
         // Output
         putchar((char) cpu->r[y]);
-    } else if (cpu->r[x] == 1) {
-        // Input
-        cpu->r[y] = getchar();
+    }
+    if (cpu->r[x] == 1) {
+        write_display1(y, cpu->m[++cpu->r[PC]]);
     }
 }
 
 void op_hwii(cpu_t *cpu, byte x, byte y) {
     // TODO hardware
+    if (cpu->r[x] == 0) {
+        // Output
+        putchar((char) cpu->m[++cpu->r[PC]]);
+    }
     if (cpu->r[x] == 1) {
         write_display1(y, cpu->m[++cpu->r[PC]]);
     }
+}
+
+void op_nop(cpu_t *cpu, byte x, byte y) {
+    // NOP
 }
 
 void op_hwn(cpu_t *cpu, byte x, byte y) {

@@ -175,6 +175,7 @@ void op_hwn(cpu_t *cpu, byte x, byte y);
 
 /* Other */
 void op_hlt(cpu_t *cpu, byte x, byte y);
+void op_nop(cpu_t *cpu, byte x, byte y);
 
 static void (*ops[16][16])(cpu_t *cpu, byte x, byte y) = {
     {
@@ -292,7 +293,8 @@ static void (*ops[16][16])(cpu_t *cpu, byte x, byte y) = {
         op_hwii
     },
     {
-        op_hlt
+        op_hlt,
+        op_nop
     },
     {},
     {}
