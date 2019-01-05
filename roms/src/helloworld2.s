@@ -1,8 +1,6 @@
 ; HELLO WORLD (V2)
 ; Ben O'Neill
 
-; Must have 512 bytes stack
-
 ; R0: Hello world length
 ; R1: Hello world memory point
 ; R2: Hello world counter
