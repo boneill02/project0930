@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory.h>
+#include <argp.h>
 #include "emulator.h"
 
 word *load_rom(char *path) {
@@ -27,8 +28,28 @@ word *load_rom(char *path) {
     return output;
 }
 
+void dump_mem(word *rom, char *outfile) {
+
+    int char_index = 0;
+
+    FILE *fp = fopen(outfile, "wb");
+
+    for (int i = 0; i < sizeof(rom) / sizeof(word); i++) {
+        if (char_index  % 2) {
+            fputc(outfile, (rom[i] & 0xFF00) >> 8);
+        } else {
+            fputc(outfile, rom[i] & 0x00FF);
+        }
+
+        char_index++;
+    }
+
+    fclose(fp);
+}
+
 int main(int argc, char *argv[]) {
     word *rom;
+    char *outfile = "dump.o";
     if (argc == 2) {
         rom = load_rom(argv[1]);
     } else {
@@ -37,5 +58,7 @@ int main(int argc, char *argv[]) {
 
     cpu_t *cpu = init_emu(rom);
     emulate(cpu);
+
+    
     return 0;
 }

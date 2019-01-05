@@ -2,6 +2,7 @@
 
 #include <memory.h>
 #include <stdlib.h>
+#include <SDL2/SDL.h>
 
 display1_t init_display1() {
     display1_t res;
@@ -14,13 +15,8 @@ display1_t init_display1() {
 
 void write_display1(byte y, word imm) {
     if (y == 0) {
-        // Set display x to arg y
-        display.x = y;
-    } else if (y == 1) {
-        display.y = y;
-    } else if (y == 2) {
         display.p[(imm & 0xFF00) >> 8][imm & 0x00FF] = true;
-    } else if (y == 3) {
+    } else if (y == 1) {
         SDL_Rect *r;
         SDL_SetRenderDrawColor(display.renderer, 255, 255, 255, 0);
 
