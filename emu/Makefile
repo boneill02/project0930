@@ -5,12 +5,12 @@ INC_DIR=include
 OBJ_DIR=obj
 SRC_DIR=src
 
-CC=/bin/gcc
-CFLAGS=-g -w -I$(INC_DIR) -lSDL2
+CC=/usr/bin/gcc
+CFLAGS=-g -w -I$(INC_DIR)
 OUT_NAME=emu0930
 
 out: objects
-	$(CC) $(OBJ_DIR)/*.o -o $(OUT_DIR)/$(OUT_NAME) $(CFLAGS)
+	$(CC) $(OBJ_DIR)/*.o -o $(OUT_DIR)/$(OUT_NAME) $(CFLAGS) -lSDL2
 
 objects: $(C_SOURCES)
 	$(CC) -c $< -o $@ $(CFLAGS)
