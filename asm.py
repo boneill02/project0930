@@ -83,6 +83,16 @@ def get_ops(lines, labels):
 
                     elif op_toks[2] in labels:
                         imm = labels[op_toks[2].replace(":", "")]
+                if len(op_toks) > tok3:
+                    if op_toks[3].startswith("#"):
+                        imm = int(op_toks[3].replace("#", "").replace(",", ""))
+                    elif op_toks[3].startswith("$"):
+                        imm = int(op_toks[3].replace("$", "").replace(",", ""))
+                    elif op_toks[3].startswith('\'') and op_toks[3].endswith('\''):
+                        if op_toks[3] == "'":
+                            imm = ord(' ')
+                        else:
+                            imm = ord(op_toks[3][1])
             
             ops.append((mnem, x, y, imm))
     
@@ -92,6 +102,7 @@ def get_bytecode(ops, stack):
     bytecode = []
 
     for i in range(65536 * 2):
+        bytecode.append(op_map["NOP"])
         bytecode.append(0)
 
     index = stack * 2
