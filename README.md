@@ -19,8 +19,22 @@ I have these uncompleted goals set in place:
 
 * Debugger
 * Keyboard
-* Monochrome Display
+* Monochrome Display (In progress!!!!)
+
+## How To
+
+To assemble a ROM (bash script):
+
+    ./assemble (rom source) (destination)
+
+To disassemble a ROM (bash script):
+   
+    ./disassemble (rom) (destination)
+
+To emulate a ROM (bash script):
+
+    ./emulate (rom)
 
 ## License
 
-Refer to LICENSE.txt :)
+MIT, refer to LICENSE.txt :)
