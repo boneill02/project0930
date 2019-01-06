@@ -93,7 +93,9 @@ def get_ops(lines, labels):
                             imm = ord(' ')
                         else:
                             imm = ord(op_toks[3][1])
-            
+            if imm != None:
+                y = 0xF
+
             ops.append((mnem, x, y, imm))
     
     return ops
@@ -101,8 +103,7 @@ def get_ops(lines, labels):
 def get_bytecode(ops, stack):
     bytecode = []
 
-    for i in range(65536 * 2):
-        bytecode.append(op_map["NOP"])
+    for i in range(65536):
         bytecode.append(0)
 
     index = stack * 2
@@ -152,103 +153,39 @@ def assemble(code, outfile, stack):
 
 op_map = {
     "ADD": 0x00,
-    "ADC": 0x01,
+    "ADDC": 0x01,
     "SUB": 0x02,
-    "SBC": 0x03,
+    "SUBC": 0x03,
     "RSB": 0x04,
-    "RBC": 0x05,
+    "RSBC": 0x05,
     "MUL": 0x06,
-    "MLS": 0x07,
+    "MULS": 0x07,
     "DIV": 0x08,
-    "DVS": 0x09,
+    "DIVS": 0x09,
     "MOD": 0x0A,
-    "MDS": 0x0B,
+    "MODS": 0x0B,
     "MOV": 0x0C,
-    "INC": 0x0D,
-    "DEC": 0x0E,
-    "CLR": 0x0F,
     "SAL": 0x10,
     "SAR": 0x11,
     "SLS": 0x12,
     "SRS": 0x13,
     "AND": 0x14,
-    "IOR": 0x15,
-    "NOT": 0x16,
-    "XOR": 0x17,
-    "ADDI": 0x20,
-    "ADCI": 0x21,
-    "SUBI": 0x22,
-    "SBCI": 0x23,
-    "RSBI": 0x24,
-    "RBCI": 0x25,
-    "MULI": 0x26,
-    "MLSI": 0x27,
-    "DIVI": 0x28,
-    "DVSI": 0x29,
-    "MODI": 0x2A,
-    "MDSI": 0x2B,
-    "MOVI": 0x2C,
-    "SALI": 0x30,
-    "SARI": 0x31,
-    "SLSI": 0x32,
-    "SRSI": 0x33,
-    "ANDI": 0x34,
-    "IORI": 0x35,
-    "NOTI": 0x36,
-    "XORI": 0x37,
-    "IFE": 0x40,
-    "IFN": 0x41,
-    "IFL": 0x42,
-    "IFLE": 0x43,
-    "IFG": 0x44,
-    "IFGE": 0x45,
-    "IFLS": 0x46,
-    "IFLES": 0x47,
-    "IFGS": 0x48,
-    "IFGES": 0x49,
-    "LPH": 0x50,
-    "LPL": 0x51,
-    "LDH": 0x52,
-    "LDL": 0x53,
-    "SPH": 0x54,
-    "SPL": 0x55,
-    "SDH": 0x56,
-    "SDL": 0x57,
-    "CPH": 0x58,
-    "CPL": 0x59,
-    "CDH": 0x5A,
-    "CDL": 0x5B,
-    "LPW": 0x60,
-    "LDW": 0x61,
-    "SPW": 0x62,
-    "SDW": 0x63,
-    "CPW": 0x64,
-    "CDW": 0x65,
-    "LPHI": 0x70,
-    "LPLI": 0x71,
-    "LDHI": 0x72,
-    "LDLI": 0x73,
-    "SPHI": 0x74,
-    "SPLI": 0x75,
-    "SDHI": 0x76,
-    "SDLI": 0x77,
-    "CPHI": 0x78,
-    "CPLI": 0x79,
-    "CDHI": 0x7A,
-    "CDLI": 0x7B,
-    "LPWI": 0x80,
-    "LDWI": 0x81,
-    "SPWI": 0x82,
-    "SDWI": 0x83,
-    "JMP": 0x90,
-    "JMPI": 0x91,
-    "JSR": 0x92,
-    "JSRI": 0x93,
-    "RET": 0x94,
-    "HWI": 0xA0,
-    "HWII": 0xA1,
-    "HLT": 0xB0,
-    "NOP": 0xB1
+    "OR": 0x15,
+    "XOR": 0x16,
+    "IFE": 0x20,
+    "IFN": 0x21,
+    "IFLT": 0x22,
+    "IFLE": 0x23,
+    "IFGT": 0x24,
+    "IFGE": 0x25,
+    "IFLS": 0x26,
+    "IFLES": 0x27,
+    "IFGS": 0x28,
+    "IFGES": 0x29,
+    "LW": 0x30,
+    "SW": 0x31,
+    "HWI": 0x40,
+    "HLT": 0x50
 }
 
 def print_help():

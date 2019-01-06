@@ -6,32 +6,37 @@
 #include <stdlib.h>
 #include <memory.h>
 #include <SDL2/SDL.h>
+#include <pthread.h>
+
+static cpu_t *cpu;
 
 /*
     Initialize components for emulation
  */
-void start_emulation(word *rom) {
+void start_emulation(word *rom, bool debug) {
     SDL_Init(SDL_INIT_EVERYTHING);
     init_display1();
-
-    if (sizeof(rom) != sizeof(MEMORY_MAX) * sizeof(word)) {
+    if (sizeof(rom) != sizeof(ROM_MAX) * sizeof(word)) {
         error(1, "Invalid ROM", "Incorrect size", true);
     }
 
-    cpu_t *cpu = malloc(sizeof(cpu_t));
-    memset(cpu, 0, sizeof(cpu));
-
-    for (int i = 0; i < MEMORY_MAX; i++) {
+    cpu = malloc(sizeof(cpu_t));
+    memset(cpu, 0, sizeof(cpu_t));
+    
+    for (int i = 0; i < ROM_MAX; i++) {
         cpu->m[i] = rom[i];
     }
-    
-    emulate(cpu);
+
+    cpu->debug = debug;
+
+    free(rom);
+    emulate();
 }
 
 /* 
    Executes the operation at memory location PC
 */
-void exec_op(cpu_t *cpu) {
+void exec_op() {
     word opw = cpu->m[cpu->r[PC]];
     op_t *op = construct_op(opw);
     if (ops[op->c][op->o] == NULL) {
@@ -43,14 +48,14 @@ void exec_op(cpu_t *cpu) {
 /*
    Main emulator loop
  */
-void emulate(cpu_t *cpu) {
+void emulate() {
     cpu->running = true;
     SDL_Event event;
     while (cpu->running) {
-        exec_op(cpu);
+        exec_op();
 
         cpu->r[PC]++;
-        if (cpu->r[PC] >= PROGRAM_MAX - 1) {
+        if (cpu->r[PC] >= ROM_MAX - 1) {
             cpu->running = false; // Halt processing if PC is out of bounds
         }
 
@@ -64,19 +69,26 @@ void emulate(cpu_t *cpu) {
         }
     }
 
+    if (cpu->debug) {
+        dump_reg();
+    }
+
+    stop_emulation();
+}
+
+void stop_emulation() {
     free(cpu);
     free(display);
     free(r);
     free(fillr);
-    dump_reg(cpu);
     SDL_Quit();
 }
 
 /*
     Dumps the CPU register information
 */
-void dump_reg(cpu_t *cpu) {
-    for (int i = 0; i < 16; i++) {
+void dump_reg() {
+    for (int i = 0; i < 15; i++) {
         printf("R%d: 0x%x\n", i, cpu->r[i]);
     }
 }
@@ -87,6 +99,7 @@ void error(int code, int location, const char *desc, bool fatal) {
     printf("Description: %s\n", desc);
     if (fatal) {
         printf("Program cannot continue.\n");
+        stop_emulation();
         exit(code);
     }
 }

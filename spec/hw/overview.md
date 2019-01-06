@@ -2,7 +2,7 @@
 
 ## General
 
-Registers: 16
+Registers: 15
 
 ROM Size: 256KiB (131072 words)
 
@@ -34,8 +34,7 @@ Word length: 16
 * R0-R11: General purpose registers
 * R12: Program counter
 * R13: Stack pointer
-* R14: Interrupt Address
-* R15: Carry register
+* R14: Carry register
 
 ## Memory Layout
 

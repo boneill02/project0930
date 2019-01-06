@@ -22,6 +22,6 @@ static display1_t *display;
 void init_display1();
 static SDL_Rect *r;
 static SDL_Rect *fillr;
-void write_display1(byte y, word imm);
+void write_display1(word imm);
 
 #endif // EMU_DEVICE_H

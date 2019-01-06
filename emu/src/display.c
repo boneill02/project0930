@@ -23,19 +23,21 @@ void init_display1() {
     r->h = 8;
 }
 
-void write_display1(byte y, word imm) {
+void write_display1(word imm) {
+    byte op = (imm & 0xFF00) >> 8;
+    byte val = imm & 0x00FF;
 
     if (display->w) {
-        display->p[y] = !display->p[y];
+        display->p[op] = !display->p[op];
         display->w = false;
         return;
     }
 
-    if (y == 0) {
+    if (op == 0) {
         memset(display->p, 0, sizeof(display->p));
-    } else if (y == 1) {
+    } else if (op == 1) {
         memset(display->p, 1, sizeof(display->p));
-    } else if (y == 2) {
+    } else if (op == 2) {
         SDL_RenderClear(display->renderer);
 
         SDL_SetRenderDrawColor(display->renderer, 255, 255, 255, 0);
@@ -49,9 +51,9 @@ void write_display1(byte y, word imm) {
         }
         
         SDL_RenderPresent(display->renderer);
-    } else if (y == 3) {
-        display->p[imm] = !display->p[imm];
-    } else if (y == 4) {
+    } else if (op == 3) {
+        display->p[val] = !display->p[val];
+    } else if (op == 4) {
         display->w = true;
     }
 }

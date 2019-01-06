@@ -6,22 +6,20 @@
 ; R2: Hello world counter
 ; R3: Hello world character
 
-LPWI R1, hello
-MOVI R0, #13
+LW R1, hello
+ADD R1, #4
+MOV R0, #13
 
 loop:
-    INC R2
-    INC R1
-    LPW R3, R1
+    ADD R1, #1
+    LW R3, R1
     HWI R4, R3
-    IFE R2, R0
+    IFE R3, R2
         HLT
-
-JSRI loop
-
+    
+    MOV R13, loop
 
 hello:
-    dw hello
     dw 'H'
     dw 'e'
     dw 'l'
@@ -36,3 +34,4 @@ hello:
     dw 'd'
     dw '!'
     dw #10
+    dw #0

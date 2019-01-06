@@ -10,7 +10,7 @@ CFLAGS=-g -w -I$(INC_DIR)
 OUT_NAME=emu0930
 
 out: objects
-	$(CC) $(OBJ_DIR)/*.o -o $(OUT_DIR)/$(OUT_NAME) $(CFLAGS) -lSDL2
+	$(CC) $(OBJ_DIR)/*.o -o $(OUT_DIR)/$(OUT_NAME) $(CFLAGS) -lSDL2 -lpthread
 
 objects: $(C_SOURCES)
 	$(CC) -c $< -o $@ $(CFLAGS)

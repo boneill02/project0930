@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory.h>
-#include <argp.h>
-#include <pthread.h>
+#include <getopt.h>
 #include <signal.h>
+#include <stdbool.h>
 
 #include "emulator.h"
 
 word *load_rom(char *path) {
     FILE *input = fopen(path, "rb");
-    word *output = malloc(sizeof(word) * MEMORY_MAX);
+    word *output = malloc(sizeof(word) * ROM_MAX);
     memset(output, 0, sizeof(output));
 
     char c;
@@ -53,20 +53,28 @@ void dump_mem(word *rom, char *outfile) {
 int main(int argc, char *argv[]) {
     signal(SIGINT, exit);
 
-    pthread_t emu_thread;
-
-    word *rom;
+    char *infile = "a.out";
     char *outfile = "dump.o";
-    if (argc == 2) {
-        rom = load_rom(argv[1]);
-    } else {
-        exit(1);
+    bool debug = false;
+
+    int opt;
+    while ((opt = getopt (argc, argv, "i:o:d")) != -1) {
+        switch (opt) {
+            case 'i':
+                infile = optarg;
+                break;
+            case 'o':
+                outfile = optarg;
+                break;
+            case 'd':
+                debug = true;
+                break;
+        }
     }
 
+    word *rom = load_rom(infile);
 
-    pthread_create(&emu_thread, NULL, start_emulation, rom);
+    start_emulation(rom, debug);
 
-    pthread_join(emu_thread, NULL);
-    
     return 0;
 }
