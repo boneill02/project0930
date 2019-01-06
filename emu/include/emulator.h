@@ -40,8 +40,6 @@ typedef struct op {
     word coxy;
 } op_t;
 
-cpu_t *init_emu(word *rom);
-
 bool is_positive(word src);
 byte get_byte(word src, byte offset);
 byte get_nibble_from_word(word src, byte offset);
@@ -49,6 +47,7 @@ byte get_nibble_from_byte(byte src, byte offset);
 op_t *construct_op(word code);
 bool has_immediate(op_t *op);
 
+void start_emulation(word *rom);
 void exec_op(cpu_t *cpu);
 void emulate(cpu_t *cpu);
 

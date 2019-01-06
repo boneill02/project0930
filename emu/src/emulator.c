@@ -6,22 +6,13 @@
 #include <stdlib.h>
 #include <memory.h>
 #include <SDL2/SDL.h>
-#include <signal.h>
-
-static volatile bool running = true;
-
-void intHandler(int dummy) {
-    running = false;
-}
 
 /*
     Initialize components for emulation
  */
-cpu_t *init_emu(word *rom) {
+void start_emulation(word *rom) {
     SDL_Init(SDL_INIT_EVERYTHING);
     init_display1();
-
-    signal(SIGINT, intHandler);
 
     if (sizeof(rom) != sizeof(MEMORY_MAX) * sizeof(word)) {
         error(1, "Invalid ROM", "Incorrect size", true);
@@ -34,7 +25,7 @@ cpu_t *init_emu(word *rom) {
         cpu->m[i] = rom[i];
     }
     
-    return cpu;
+    emulate(cpu);
 }
 
 /* 
@@ -54,6 +45,7 @@ void exec_op(cpu_t *cpu) {
  */
 void emulate(cpu_t *cpu) {
     cpu->running = true;
+    SDL_Event event;
     while (cpu->running) {
         exec_op(cpu);
 
@@ -61,7 +53,15 @@ void emulate(cpu_t *cpu) {
         if (cpu->r[PC] >= PROGRAM_MAX - 1) {
             cpu->running = false; // Halt processing if PC is out of bounds
         }
-        if (cpu->running) cpu->running = running;
+
+        while (SDL_PollEvent(&event)) {
+            switch (event.type) {
+                case SDL_QUIT:
+                    cpu->running = false;
+                default:
+                    break;
+            }
+        }
     }
 
     free(cpu);

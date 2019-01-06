@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <memory.h>
 #include <argp.h>
+#include <pthread.h>
+#include <signal.h>
+
 #include "emulator.h"
 
 word *load_rom(char *path) {
@@ -48,6 +51,10 @@ void dump_mem(word *rom, char *outfile) {
 }
 
 int main(int argc, char *argv[]) {
+    signal(SIGINT, exit);
+
+    pthread_t emu_thread;
+
     word *rom;
     char *outfile = "dump.o";
     if (argc == 2) {
@@ -56,9 +63,10 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    cpu_t *cpu = init_emu(rom);
-    emulate(cpu);
 
+    pthread_create(&emu_thread, NULL, start_emulation, rom);
+
+    pthread_join(emu_thread, NULL);
     
     return 0;
 }
