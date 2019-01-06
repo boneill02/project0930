@@ -171,7 +171,6 @@ void op_ret(cpu_t *cpu, byte x, byte y);
 /* I/O */
 void op_hwi(cpu_t *cpu, byte x, byte y);
 void op_hwii(cpu_t *cpu, byte x, byte y);
-void op_hwn(cpu_t *cpu, byte x, byte y);
 
 /* Other */
 void op_hlt(cpu_t *cpu, byte x, byte y);

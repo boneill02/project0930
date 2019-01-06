@@ -4,34 +4,46 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 
-display1_t init_display1() {
-    display1_t res;
-    res.x = 0;
-    res.y = 0;
-    res.window = SDL_CreateWindow("EMU0930", 0, 0, 512, 512, SDL_WINDOW_SHOWN);
-    res.renderer = SDL_CreateRenderer(res.window, 0, -1);
-    return res;
+void init_display1() {
+    display = malloc(sizeof(display1_t));
+    memset(display, 0, sizeof(display1_t));
+    display->window = SDL_CreateWindow("EMU0930", 0, 0, 512, 512, SDL_WINDOW_SHOWN);
+    display->renderer = SDL_CreateRenderer(display->window, 0, -1);
+    r = malloc(sizeof(SDL_Rect));
+    fillr = malloc(sizeof(SDL_Rect));
+
+    fillr->x = 0;
+    fillr->y = 0;
+    fillr->w = 512;
+    fillr->h = 512;
+
+    r->x = 0;
+    r->y = 0;
+    r->w = 8;
+    r->h = 8;
 }
 
 void write_display1(byte y, word imm) {
     if (y == 0) {
-        display.p[(imm & 0xFF00) >> 8][imm & 0x00FF] = true;
+        memset(display->p, 0, sizeof(display->p));
     } else if (y == 1) {
-        SDL_Rect *r;
-        SDL_SetRenderDrawColor(display.renderer, 255, 255, 255, 0);
+        memset(display->p, 1, sizeof(display->p));
+    } else if (y == 2) {
+        SDL_SetRenderDrawColor(display->renderer, 0, 0, 0, 0);
+        SDL_RenderFillRect(display->renderer, fillr);
 
-        for (int i = 0; i < 256; i++) {
-            for (int j = 0; j < 256; j++) {
-                if (display.p[i][j]) {
-                    r->x = i * 2;
-                    r->y = j * 2;
-                    r->w = 50;
-                    r->h = 50;
-                    SDL_RenderFillRect(display.renderer, r);
-                }
+        SDL_SetRenderDrawColor(display->renderer, 255, 255, 255, 0);
+
+        for (int i = 0; i < DISPLAY1_SIZE * DISPLAY1_SIZE; i++) {
+            if (display->p[i]) {
+                r->x = (i / DISPLAY1_SIZE) * 8;
+                r->y = (i % DISPLAY1_SIZE) * 8;
+                SDL_RenderFillRect(display->renderer, r);
             }
         }
-
-        SDL_RenderPresent(display.renderer);
+        
+        SDL_RenderPresent(display->renderer);
+    } else if (y == 3) {
+        display->p[imm] = !display->p[imm];
     }
 }

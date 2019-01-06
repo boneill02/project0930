@@ -19,12 +19,12 @@ void intHandler(int dummy) {
  */
 cpu_t *init_emu(word *rom) {
     SDL_Init(SDL_INIT_EVERYTHING);
-    display = init_display1();
+    init_display1();
 
     signal(SIGINT, intHandler);
 
     if (sizeof(rom) != sizeof(MEMORY_MAX) * sizeof(word)) {
-        error(1, "Invalid ROM", true);
+        error(1, "Invalid ROM", "Incorrect size", true);
     }
 
     cpu_t *cpu = malloc(sizeof(cpu_t));

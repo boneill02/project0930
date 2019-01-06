@@ -639,17 +639,17 @@ void op_jmpi(cpu_t *cpu, byte x, byte y) {
 }
 
 void op_jsr(cpu_t *cpu, byte x, byte y) {
-    cpu->r[PC] = cpu->m[cpu->r[x]];
-    cpu->m[++cpu->r[SP]] = cpu->r[x];
+    cpu->r[PC] = cpu->r[x] - 1;
 }
 
 void op_jsri(cpu_t *cpu, byte x, byte y) {
-    cpu->m[++cpu->r[SP]] = cpu->m[++cpu->r[PC]];
-    cpu->r[PC] = cpu->m[cpu->r[SP]];
+    cpu->r[PC] = cpu->m[++cpu->r[PC]] - 1;
 }
 
 void op_ret(cpu_t *cpu, byte x, byte y) {
-    cpu->r[PC] = cpu->m[--cpu->r[SP]];
+    cpu->r[SP]--;
+    cpu->r[PC] = cpu->m[cpu->r[SP]];
+
 }
 
 void op_hwi(cpu_t *cpu, byte x, byte y) {
@@ -660,7 +660,7 @@ void op_hwi(cpu_t *cpu, byte x, byte y) {
         putchar((char) cpu->r[y]);
     }
     if (cpu->r[x] == 1) {
-        write_display1(y, cpu->m[++cpu->r[PC]]);
+        write_display1(cpu->r[y], 0);
     }
 }
 
@@ -671,16 +671,12 @@ void op_hwii(cpu_t *cpu, byte x, byte y) {
         putchar((char) cpu->m[++cpu->r[PC]]);
     }
     if (cpu->r[x] == 1) {
-        write_display1(y, cpu->m[++cpu->r[PC]]);
+        write_display1(cpu->r[y], cpu->m[++cpu->r[PC]]);
     }
 }
 
 void op_nop(cpu_t *cpu, byte x, byte y) {
     // NOP
-}
-
-void op_hwn(cpu_t *cpu, byte x, byte y) {
-    // TODO hardware
 }
 
 void op_hlt(cpu_t *cpu, byte x, byte y) { 
