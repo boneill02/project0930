@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./emu/bin/emu0930 $1
