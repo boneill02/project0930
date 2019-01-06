@@ -69,6 +69,7 @@ void emulate(cpu_t *cpu) {
     free(r);
     free(fillr);
     dump_reg(cpu);
+    SDL_Quit();
 }
 
 /*
