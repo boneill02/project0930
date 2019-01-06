@@ -5,16 +5,14 @@
 #include <stdbool.h>
 #include <SDL2/SDL.h>
 
+#define SDL_WINDOW_SIZE 512
 #define DISPLAY1_SIZE 64
 
 typedef struct display1 {
     bool p[DISPLAY1_SIZE * DISPLAY1_SIZE];
     int o[DISPLAY1_SIZE * DISPLAY1_SIZE];
     bool w;
-    int x;
-    int y;
-    int q;
-    bool z;
+    int i;
     SDL_Window *window;
     SDL_Renderer *renderer;
 } display1_t;

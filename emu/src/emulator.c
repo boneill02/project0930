@@ -64,6 +64,10 @@ void emulate(cpu_t *cpu) {
         if (cpu->running) cpu->running = running;
     }
 
+    free(cpu);
+    free(display);
+    free(r);
+    free(fillr);
     dump_reg(cpu);
 }
 
