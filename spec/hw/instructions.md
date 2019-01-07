@@ -106,226 +106,76 @@ OR
 XOR
 `Rx = Rx ^ Ry`
 
-### 0x20xy ADDI Rx, IMM
-
-Add
-`Rx = Rx + IMM`
-
-### 0x21xy ADCI Rx, IMM
-
-Add with carry
-`Rx = Rx + IMM + C`
-
-### 0x22xy SUBI Rx, IMM
-
-Subtract
-`Rx = Rx - IMM`
-
-### 0x23xy SBCI Rx, IMM
-
-Subtract with carry
-`Rx = (Rx - IMM) + C`
-
-### 0x24xy RSBI Rx, IMM
-
-Reverse subtract
-`Rx = IMM - Rx`
-
-### 0x25xy RBCI Rx, IMM
-
-Reverse subtract with carry
-`Rx = (IMM - Rx) + C`
-
-### 0x26xy MULI Rx, IMM
-
-Multiply
-`Rx = Rx * IMM`
-
-### 0x27xy MLSI Rx, IMM
-
-Multiply with carry
-`Rx = signed Rx * IMM`
-
-### 0x28xy DIVI Rx, IMM
-
-Divide
-`Rx = Rx / IMM`
-
-### 0x29xy DVSI Rx, IMM
-
-Divide signed
-`Rx = signed Rx / IMM`
-
-### 0x2Axy MODI Rx, IMM
-
-Modulus
-`Rx = Rx % IMM`
-
-### 0x2Bxy MDSI Rx, IMM
-
-Modulus signed
-`Rx = Rx % IMM`
-
-### 0x2Cxy MOVI Rx, IMM
-
-Move
-`Rx = IMM`
-
-### 0x30xy SALI Rx, IMM
-
-Shift arithmetic left
-`Rx = Rx << IMM`
-
-### 0x31xy SARI Rx, IMM
-
-Shift arithmetic right
-`Rx = Rx >> IMM`
-
-### 0x32xy SLSI Rx, IMM
-
-Shift arithmetic left signed
-+1 cycle
-`if (Rx >= 0) Rx = Rx << IMM`
-`else Rx = Rx >> IMM`
-
-### 0x33xy SRSI Rx, IMM
-
-Shift arithmetic right signed
-+1 cycle
-`if (Rx >= 0) Rx = Rx >> IMM`
-`else Rx = Rx << IMM`
-
-### 0x34xy ANDI Rx, IMM
-
-AND
-`Rx = Rx & IMM`
-
-### 0x35xy IORI Rx, IMM
-
-OR
-`Rx = Rx | IMM`
-
-### 0x36xy NOTI Rx, IMM
-
-NOT
-`Rx = ~IMM`
-
-### 0x37xy XORI Rx, IMM
-
-XOR
-`Rx = Rx ^ IMM`
-
-### 0x40xy IFE Rx, Ry
+### 0x20xy IFE Rx, Ry
 
 If equal execute next instruction
 `if (Rx != Ry) PC += 2`
 
-### 0x41xy IFN Rx, Ry
+### 0x21xy IFN Rx, Ry
 
 If not equal execute next instruction
 `if (Rx == Ry) PC += 2`
 
-### 0x42xy IFL Rx, Ry
+### 0x22xy IFL Rx, Ry
 
 If less than execute next instruction
 `if (Rx >= Ry) PC += 2`
 
-### 0x43xy IFLE Rx, Ry
+### 0x23xy IFLE Rx, Ry
 
 If less than or equal to execute next instruction
 `if (Rx > Ry) PC += 2`
 
-### 0x44xy IFG Rx, Ry
+### 0x24xy IFG Rx, Ry
 
 If greater than execute next instruction
 `if (Rx <= Ry) PC += 2`
 
-### 0x45xy IFGE Rx, Ry
+### 0x25xy IFGE Rx, Ry
 
 If greater than or equal to execute next instruction
 `if (Rx < Ry) PC += 2`
 
-### 0x46xy IFLS Rx, Ry
+### 0x26xy IFLS Rx, Ry
 
 If less than signed execute next instruction
 `if (Rx >= Ry) PC += 2`
 
-### 0x47xy IFLES Rx, Ry
+### 0x27xy IFLES Rx, Ry
 
 If less than or equal to signed execute next instruction
 `if (Rx > Ry) PC += 2`
 
-### 0x48xy IFGS Rx, Ry
+### 0x28xy IFGS Rx, Ry
 
 If greater than signed execute next instruction
 `if (Rx <= Ry) PC += 2`
 
-### 0x49xy IFGES Rx, Ry
+### 0x29xy IFGES Rx, Ry
 
 If greater than or equal to signed execute next instruction
 `if (Rx < Ry) PC += 2`
 
 ## Memory
 
-### 0x50xy LPH Rx, Ry
-
-Load program byte (high)
-`Rx = ([Ry] & 0xFF00) >> 8`
-
-### 0x51xy LPL Rx, Ry
-
-Load program byte (low)
-`Rx = [Ry] & 0x00FF`
-
-### 0x52xy LH Rx, Ry
-
-Load data byte (high)
-`Rx = ([Ry + 0x10000] & 0xFF00) >> 8`
-
-### 0x53xy LL Rx, Ry
-
-Load data byte (low)
-`Rx = [Ry + 0x10000] & 0x00FF`
-
-### 0x54xy SH Rx, Ry
-
-Store program byte (high)
-`[Rx] = ([Rx] & 0x00FF) | (Ry & 0xFF00)`
-
-### 0x55xy SL Rx, Ry
-
-Store program byte (low)
-`[Rx] = ([Rx] & 0xFF00) | (Ry & 0x00FF)`
-
-### 0x60xy LW Rx, Ry
+### 0x30xy LW Rx, Ry
 
 Load word
 `Rx = [Ry]`
 
-### 0x62xy SW Rx, Ry
+### 0x31xy SW Rx, Ry
 
 Store word
 `[Rx] = Ry`
 
-## Branch
-
-### 0x90x0 JMP Rx
-
-Jump
-`PC = PC + Rx`
-
 ## I/O
 
-### 0xA0xy HWI Rx, Ry
+### 0x40xy HWI Rx, Ry
 
 Hardware interrupt to HWID Rx with argument Ry
 
-### 0xA1x0 HWII Rx, IMM
-
-Hardware interrupt to HWID Rx with argument IMM
-
 ## Other
 
-### 0xB000 HLT
+### 0x5000 HLT
 
 Halt CPU processing

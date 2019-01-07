@@ -24,7 +24,7 @@ void init_display1() {
 }
 
 void write_display1(word imm) {
-    byte op = (imm & 0xFF00) >> 8;
+    byte op = (byte) (imm & 0xFF00) >> 8;
     byte val = imm & 0x00FF;
 
     if (display->w) {
@@ -41,6 +41,8 @@ void write_display1(word imm) {
         SDL_RenderClear(display->renderer);
 
         SDL_SetRenderDrawColor(display->renderer, 255, 255, 255, 0);
+
+        SDL_RenderFillRect(display->renderer, fillr);
 
         for (int i = 0; i < DISPLAY1_SIZE * DISPLAY1_SIZE; i++) {
             if (display->p[i]) {

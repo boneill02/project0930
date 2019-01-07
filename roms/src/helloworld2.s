@@ -6,18 +6,18 @@
 ; R2: Hello world counter
 ; R3: Hello world character
 
-LW R1, hello
-ADD R1, #4
+MOV R1, $hello
+ADD R1, #1
 MOV R0, #13
 
 loop:
-    ADD R1, #1
     LW R3, R1
+    ADD R1, #1
     HWI R4, R3
     IFE R3, R2
         HLT
     
-    MOV R13, loop
+    MOV R13, $loop
 
 hello:
     dw 'H'
