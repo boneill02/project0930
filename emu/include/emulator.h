@@ -112,10 +112,10 @@ static void (*ops[16][16])(cpu_t *cpu, byte x, byte y) = {
         op_mov
     },
     {
-        op_sal,
-        op_sar,
-        op_sls,
-        op_srs,
+        op_shl,
+        op_shr,
+        op_shls,
+        op_shrs,
         op_and,
         op_or,
         op_xor

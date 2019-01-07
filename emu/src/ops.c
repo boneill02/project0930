@@ -175,7 +175,7 @@ void op_mov(cpu_t *cpu, byte x, byte y) {
     }
 }
 
-void op_sal(cpu_t *cpu, byte x, byte y) {
+void op_shl(cpu_t *cpu, byte x, byte y) {
     if (y == 0xF) {
         cpu->r[x] = cpu->r[x] << cpu->m[++cpu->r[PC]];
     } else {
@@ -183,7 +183,7 @@ void op_sal(cpu_t *cpu, byte x, byte y) {
     }
 }
 
-void op_sar(cpu_t *cpu, byte x, byte y) {
+void op_shr(cpu_t *cpu, byte x, byte y) {
     if (y == 0xF) {
         cpu->r[x] = cpu->r[x] >> cpu->m[++cpu->r[PC]];
     } else {
@@ -191,7 +191,7 @@ void op_sar(cpu_t *cpu, byte x, byte y) {
     }
 }
 
-void op_sls(cpu_t *cpu, byte x, byte y) {
+void op_shls(cpu_t *cpu, byte x, byte y) {
     int srx, sry; // signed Rx, Ry
     if (is_positive(cpu->r[x])) {
         srx = get_unsigned(cpu->r[x]);
@@ -222,7 +222,7 @@ void op_sls(cpu_t *cpu, byte x, byte y) {
     }
 }
 
-void op_srs(cpu_t *cpu, byte x, byte y) {
+void op_shrs(cpu_t *cpu, byte x, byte y) {
     int srx, sry; // signed Rx, Ry
     if (is_positive(cpu->r[x])) {
         srx = get_unsigned(cpu->r[x]);
