@@ -67,26 +67,26 @@ Modulus signed
 Move
 `Rx = Ry`
 
-### 0x10xy SAL Rx, Ry
+### 0x10xy SHL Rx, Ry
 
-Shift arithmetic left
+Shift left
 `Rx = Rx << Ry`
 
-### 0x11xy SAR Rx, Ry
+### 0x11xy SHR Rx, Ry
 
-Shift arithmetic right
+Shift right
 `Rx = Rx >> Ry`
 
-### 0x12xy SLS Rx, Ry
+### 0x12xy SHLS Rx, Ry
 
-Shift arithmetic left signed
+Shift left signed
 +1 cycle
 `if (Rx >= 0) Rx = Rx << Ry`
 `else Rx = Rx >> Ry`
 
-### 0x13xy SRS Rx, Ry
+### 0x13xy SHRS Rx, Ry
 
-Shift arithmetic right signed
+Shift right signed
 +1 cycle
 `if (Rx >= 0) Rx = Rx >> Ry`
 `else Rx = Rx << Ry`
@@ -111,12 +111,12 @@ XOR
 If equal execute next instruction
 `if (Rx != Ry) PC += 2`
 
-### 0x21xy IFN Rx, Ry
+### 0x21xy IFNE Rx, Ry
 
 If not equal execute next instruction
 `if (Rx == Ry) PC += 2`
 
-### 0x22xy IFL Rx, Ry
+### 0x22xy IFLT Rx, Ry
 
 If less than execute next instruction
 `if (Rx >= Ry) PC += 2`
@@ -126,7 +126,7 @@ If less than execute next instruction
 If less than or equal to execute next instruction
 `if (Rx > Ry) PC += 2`
 
-### 0x24xy IFG Rx, Ry
+### 0x24xy IFGT Rx, Ry
 
 If greater than execute next instruction
 `if (Rx <= Ry) PC += 2`
@@ -136,7 +136,7 @@ If greater than execute next instruction
 If greater than or equal to execute next instruction
 `if (Rx < Ry) PC += 2`
 
-### 0x26xy IFLS Rx, Ry
+### 0x26xy IFLTS Rx, Ry
 
 If less than signed execute next instruction
 `if (Rx >= Ry) PC += 2`
@@ -146,7 +146,7 @@ If less than signed execute next instruction
 If less than or equal to signed execute next instruction
 `if (Rx > Ry) PC += 2`
 
-### 0x28xy IFGS Rx, Ry
+### 0x28xy IFGTS Rx, Ry
 
 If greater than signed execute next instruction
 `if (Rx <= Ry) PC += 2`
