@@ -1,3 +1,5 @@
 *.o
 emu/bin/emu0930
 a.out
+.vscode/
+*.swp
