@@ -537,9 +537,9 @@ void op_hwi(cpu_t *cpu, byte x, byte y) {
         }
     } else if (cpu->r[x] == 1) {
         if (y == 0xF) {
-            write_display1((char) cpu->r[y]);
+            write_display1(cpu->m[++cpu->r[PC]], cpu);
         } else {
-            write_display1((char) cpu->m[++cpu->r[PC]]);
+            write_display1(cpu->r[y], cpu);
         }
     }
 }

@@ -19,16 +19,16 @@ void init_display1() {
 
     r->x = 0;
     r->y = 0;
-    r->w = 8;
-    r->h = 8;
+    r->w = SDL_WINDOW_SIZE / DISPLAY1_SIZE;
+    r->h = SDL_WINDOW_SIZE / DISPLAY1_SIZE;
 }
 
-void write_display1(word imm) {
-    byte op = (byte) (imm & 0xFF00) >> 8;
+void write_display1(word imm, cpu_t *cpu) {
+    byte op = (imm & 0xFF00) >> 8;
     byte val = imm & 0x00FF;
 
     if (display->w) {
-        display->p[op] = !display->p[op];
+        display->p[op][val] = !display->p[op][val];
         display->w = false;
         return;
     }
@@ -40,22 +40,32 @@ void write_display1(word imm) {
     } else if (op == 2) {
         SDL_RenderClear(display->renderer);
 
-        SDL_SetRenderDrawColor(display->renderer, 255, 255, 255, 0);
+        SDL_SetRenderDrawColor(display->renderer, 0, 0, 0, 0);
 
         SDL_RenderFillRect(display->renderer, fillr);
 
-        for (int i = 0; i < DISPLAY1_SIZE * DISPLAY1_SIZE; i++) {
-            if (display->p[i]) {
-                r->x = (i % DISPLAY1_SIZE) * (SDL_WINDOW_SIZE / DISPLAY1_SIZE);
-                r->y = (i / DISPLAY1_SIZE) * (SDL_WINDOW_SIZE / DISPLAY1_SIZE);
-                SDL_RenderFillRect(display->renderer, r);
+        SDL_SetRenderDrawColor(display->renderer, 255, 255, 255, 0);
+
+        for (int i = 0; i < DISPLAY1_SIZE; i++) {
+            for (int j = 0; j < DISPLAY1_SIZE; j++) {
+                if (display->p[i][j]) {
+                    r->x = i * (SDL_WINDOW_SIZE / DISPLAY1_SIZE);
+                    r->y = j * (SDL_WINDOW_SIZE / DISPLAY1_SIZE);
+                    SDL_RenderFillRect(display->renderer, r);
+                }
             }
         }
         
         SDL_RenderPresent(display->renderer);
     } else if (op == 3) {
-        display->p[val] = !display->p[val];
-    } else if (op == 4) {
         display->w = true;
+    } else if (op == 4) {
+        display->x = val;
+    } else if (op == 5) {
+        display->y = val;
+    } else if (op == 6) {
+        display->p[display->x][display->y] = !display->p[display->x][display->y];
+    } else if (op == 7) {
+        cpu->r[val] = display->p[display->x][display->y];
     }
 }
