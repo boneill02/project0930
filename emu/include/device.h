@@ -17,12 +17,22 @@ typedef struct display1 {
     SDL_Renderer *renderer;
 } display1_t;
 
+typedef struct keyboard1 {
+    int k;
+    bool d[256];
+} keyboard1_t;
+
 static display1_t *display;
+static keyboard1_t *keyboard;
 
 static SDL_Rect *r;
 static SDL_Rect *fillr;
 
 void init_display1();
 void write_display1(word imm, cpu_t *cpu);
+
+void init_keyboard1();
+void write_keyboard1(word imm, cpu_t *cpu);
+void set_keydown(int key, bool down);
 
 #endif // EMU_DEVICE_H

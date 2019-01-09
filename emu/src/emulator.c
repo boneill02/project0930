@@ -16,6 +16,7 @@ static cpu_t *cpu;
 void start_emulation(word *rom, bool debug) {
     SDL_Init(SDL_INIT_EVERYTHING);
     init_display1();
+    init_keyboard1();
     if (sizeof(rom) != sizeof(ROM_MAX) * sizeof(word)) {
         error(1, "Invalid ROM", "Incorrect size", true);
     }
@@ -59,14 +60,23 @@ void emulate() {
             cpu->running = false; // Halt processing if PC is out of bounds
         }
 
+        SDL_PumpEvents();
+
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
                 case SDL_QUIT:
                     cpu->running = false;
+                    break;
+                case SDL_KEYDOWN:
+                    set_keydown(event.key.keysym.sym, true);
+                    break;
+                case SDL_KEYUP:
+                    set_keydown(event.key.keysym.sym, false);
                 default:
                     break;
             }
         }
+        fflush(stdout);
     }
 
     if (cpu->debug) {
@@ -79,6 +89,7 @@ void emulate() {
 void stop_emulation() {
     free(cpu);
     free(display);
+    free(keyboard);
     free(r);
     free(fillr);
     SDL_Quit();

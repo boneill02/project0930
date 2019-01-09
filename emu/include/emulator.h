@@ -64,10 +64,10 @@ void op_mods(cpu_t *cpu, byte x, byte y);
 void op_mov(cpu_t *cpu, byte x, byte y);
 
 /* Bitwise/Shifts */
-void op_sal(cpu_t *cpu, byte x, byte y);
-void op_sar(cpu_t *cpu, byte x, byte y);
-void op_sls(cpu_t *cpu, byte x, byte y);
-void op_srs(cpu_t *cpu, byte x, byte y);
+void op_shl(cpu_t *cpu, byte x, byte y);
+void op_shr(cpu_t *cpu, byte x, byte y);
+void op_shls(cpu_t *cpu, byte x, byte y);
+void op_shrs(cpu_t *cpu, byte x, byte y);
 void op_and(cpu_t *cpu, byte x, byte y);
 void op_or(cpu_t *cpu, byte x, byte y);
 void op_not(cpu_t *cpu, byte x, byte y);

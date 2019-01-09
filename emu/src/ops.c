@@ -541,6 +541,12 @@ void op_hwi(cpu_t *cpu, byte x, byte y) {
         } else {
             write_display1(cpu->r[y], cpu);
         }
+    } else if (cpu->r[x] == 2) {
+        if (y == 0xF) {
+            write_keyboard1(cpu->m[++cpu->r[PC]], cpu);
+        } else {
+            write_keyboard1(cpu->r[y], cpu);
+        }
     }
 }
 

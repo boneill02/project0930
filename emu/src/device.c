@@ -69,3 +69,30 @@ void write_display1(word imm, cpu_t *cpu) {
         cpu->r[val] = display->p[display->x][display->y];
     }
 }
+
+void init_keyboard1() {
+    keyboard = malloc(sizeof(keyboard1_t));
+    memset(keyboard, 0, sizeof(keyboard1_t));
+}
+
+void write_keyboard1(word imm, cpu_t *cpu) {
+    byte op = (imm & 0xFF00) >> 8;
+    byte val = imm & 0x00FF;
+
+    if (op == 0) { // Set k
+        keyboard->k = val;
+    } else if (op == 1) { // Get state of key
+        cpu->r[val] = keyboard->d[keyboard->k];
+    } else if (op == 2) { // Get key down at index 0
+        cpu->r[val] = 0;
+        for (int i = 0; i < sizeof(keyboard->d) / sizeof(word); i++) {
+            if (keyboard->d[i]) {
+                cpu->r[val] = i;
+            }
+        }
+    }
+}
+
+void set_keydown(int key, bool down) {
+    keyboard->d[key] = down;
+}
