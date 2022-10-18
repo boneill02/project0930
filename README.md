@@ -1,6 +1,6 @@
 # PROJECT 0930
 
-An emulator of custom hardware (inspired by DCPU-16)
+An emulator of a fantasy hardware ISA (inspired by DCPU-16).
 
 ## Overview
 
@@ -19,22 +19,22 @@ I have these uncompleted goals set in place:
 
 * Debugger
 * Keyboard
-* Monochrome Display (In progress!!!!)
+* Monochrome Display
 
 ## How To
 
-To assemble a ROM (bash script):
+Use the assembler:
 
-    ./assemble (rom source) (destination)
+    ./assemble (source) (destination)
 
-To disassemble a ROM (bash script):
+Use the disassembler:
    
     ./disassemble (rom) (destination)
 
-To emulate a ROM (bash script):
+To start the emulator:
 
     ./emulate (rom)
 
 ## License
 
-MIT, refer to LICENSE.txt :)
+MIT, refer to LICENSE.txt.
